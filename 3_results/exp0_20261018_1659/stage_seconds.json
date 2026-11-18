@@ -1,0 +1,27 @@
+{
+ "sessions": [
+  "20261018_165411"
+ ],
+ "this_session": {
+  "S0 resolve Drive paths": 288.90567445755005,
+  "S1 index and labels": 0.18047809600830078,
+  "S2 shared audio": 31.649945735931396,
+  "S4 boundaries": 8.76026177406311,
+  "S5 features": 1959.4885609149933,
+  "S6 folds": 0.0990302562713623,
+  "S7 classifiers and evaluation": 7536.886280059814,
+  "S8 integrity gate": 30.372811794281006,
+  "S11 manifest": 3.2862725257873535
+ },
+ "cumulative": {
+  "S0 resolve Drive paths": 288.90567445755005,
+  "S1 index and labels": 0.18047809600830078,
+  "S2 shared audio": 31.649945735931396,
+  "S4 boundaries": 8.76026177406311,
+  "S5 features": 1959.4885609149933,
+  "S6 folds": 0.0990302562713623,
+  "S7 classifiers and evaluation": 7536.886280059814,
+  "S8 integrity gate": 30.372811794281006,
+  "S11 manifest": 3.2862725257873535
+ }
+}

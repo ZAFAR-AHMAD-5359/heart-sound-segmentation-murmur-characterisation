@@ -1,0 +1,47 @@
+{
+ "verified_cycle_hashes": {
+  "C": {
+   "recomputed": "b30ea82ce6cd1abc",
+   "recorded": "b30ea82ce6cd1abc"
+  },
+  "A": {
+   "recomputed": "f75a1dc23b372ff9",
+   "recorded": "f75a1dc23b372ff9"
+  },
+  "B": {
+   "recomputed": "4daf23fe869c7df5",
+   "recorded": "4daf23fe869c7df5"
+  },
+  "S": {
+   "recomputed": "148d234f5c82ed92",
+   "recorded": "148d234f5c82ed92"
+  },
+  "S_pub": {
+   "recomputed": "7af9b3e99c90a46d",
+   "recorded": "7af9b3e99c90a46d"
+  },
+  "T": {
+   "recomputed": "12391a2b16c67a28",
+   "recorded": "12391a2b16c67a28"
+  },
+  "W": {
+   "recomputed": "8e8d2047194d5a76",
+   "recorded": "8e8d2047194d5a76"
+  },
+  "D": {
+   "recomputed": "0a195588cbde5014",
+   "recorded": "0a195588cbde5014"
+  },
+  "E": {
+   "recomputed": "fab2e1d5ac6454e3",
+   "recorded": "fab2e1d5ac6454e3"
+  }
+ },
+ "arm_rank_correlations_with_retention": {
+  "iou_mean": 0.4761904761904762,
+  "iou_systole": 0.6904761904761906,
+  "s2_within40": 0.4761904761904762,
+  "start_abs": 0.934148484292342
+ },
+ "n_recordings": 610
+}

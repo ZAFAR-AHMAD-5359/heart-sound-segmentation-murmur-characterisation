@@ -1,0 +1,9 @@
+recordings 610 cycles 12881
+arm C systole (S1 end to S2 onset) ms: median 122, IQR 104-147, share < 110 ms 0.266
+arm C diastole (S2 end to cycle end) ms: median 220, share < 110 ms 0.012
+s2c_0.1: cycles displaced 0.101 (seed range 0.095-0.106) | clipped 0.12 | effective shift median earlier 100 ms, later 100 ms | S2 >60 ms off in 0.100 of recordings
+s2c_0.2: cycles displaced 0.211 (seed range 0.199-0.221) | clipped 0.15 | effective shift median earlier 100 ms, later 100 ms | S2 >60 ms off in 0.199 of recordings
+s2c_0.3: cycles displaced 0.304 (seed range 0.292-0.312) | clipped 0.15 | effective shift median earlier 100 ms, later 100 ms | S2 >60 ms off in 0.299 of recordings
+s2s_0.1: cycles displaced 0.100 (seed range 0.100-0.100) | clipped 0.15 | effective shift median earlier 100 ms, later 100 ms | S2 >60 ms off in 0.000 of recordings
+s2s_0.2: cycles displaced 0.199 (seed range 0.199-0.199) | clipped 0.13 | effective shift median earlier 100 ms, later 100 ms | S2 >60 ms off in 0.000 of recordings
+s2s_0.3: cycles displaced 0.300 (seed range 0.300-0.300) | clipped 0.13 | effective shift median earlier 100 ms, later 100 ms | S2 >60 ms off in 0.000 of recordings

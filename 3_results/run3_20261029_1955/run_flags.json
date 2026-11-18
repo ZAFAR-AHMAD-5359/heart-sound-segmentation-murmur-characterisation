@@ -1,0 +1,21 @@
+{
+ "dry_run": false,
+ "limit_recordings": 0,
+ "seed": 42,
+ "n_splits": 10,
+ "chunk": 400,
+ "n_min_cycles": 2,
+ "dry_run_subset": null,
+ "run": "extension_run3_acoustic_control",
+ "ensemble_seeds": [
+  42,
+  1042,
+  2042,
+  3042,
+  4042
+ ],
+ "groups": "child",
+ "prereg_sha256": "755b47da43b250671391aae8672b182278cb4561314343581024ab1f581d8974",
+ "tw_stamp": "20261029_1824_ac",
+ "exp2_plan_sha256": "f0b9fe2b9ddc76a2ffaa0c170cf13d0392e5e68f7a65a4dcdfbf190e5a31a184"
+}

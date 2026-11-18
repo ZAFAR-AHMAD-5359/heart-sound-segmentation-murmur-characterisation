@@ -1,0 +1,14 @@
+clean composites: E 43.6, S 46.9, T 49.9, W 50.5, C 53.5
+H1 T_seg_gauss0 - equal_time: +3.70 [+0.75, +6.71], 2.5th pct +0.75 -> REJECTED (gain holds)
+gauss10  seg: S +4.9 over E [+2.5, +7.2], R 1.49 | T +5.9 over E [+3.0, +8.4], R 0.94 | W +6.9 over E [+4.2, +9.4], R 1.00 | T-S +1.0
+         both:S +5.8 over E_both [+3.4, +8.0] | T +5.7 over E_both [+2.7, +8.6] | W +7.9 over E_both [+4.7, +10.8] | C +8.8 over E_both [+5.8, +11.9] | E_both-E -1.3
+gauss0   seg: S +3.1 over E [+0.8, +5.5], R 0.95 | T +3.7 over E [+0.7, +6.7], R 0.59 | W +5.4 over E [+3.1, +7.6], R 0.78 | T-S +0.6
+         both:S +4.7 over E_both [+1.9, +7.4] | T +3.6 over E_both [+0.9, +6.2] | W +2.9 over E_both [+0.5, +5.3] | C +7.9 over E_both [+5.0, +10.9] | E_both-E -3.3
+burst10  seg: S +4.0 over E [+1.7, +6.2], R 1.22 | T +6.4 over E [+3.3, +9.1], R 1.03 | W +6.4 over E [+3.7, +9.0], R 0.92 | T-S +2.4
+         both:S +3.1 over E_both [+0.6, +5.4] | T +5.6 over E_both [+2.6, +8.4] | W +6.4 over E_both [+3.5, +9.2] | C +6.8 over E_both [+4.1, +9.4] | E_both-E +0.8
+burst0   seg: S +3.0 over E [+0.5, +5.3], R 0.91 | T +5.5 over E [+3.0, +8.0], R 0.88 | W +5.9 over E [+2.6, +8.9], R 0.85 | T-S +2.5
+         both:S +4.0 over E_both [+1.3, +6.6] | T +5.0 over E_both [+2.1, +7.6] | W +6.3 over E_both [+3.7, +8.8] | C +9.8 over E_both [+6.6, +13.0] | E_both-E +0.3
+esc5010  seg: S +4.9 over E [+2.3, +7.4], R 1.49 | T +5.8 over E [+3.0, +8.2], R 0.92 | W +5.7 over E [+3.0, +8.1], R 0.83 | T-S +0.8
+         both:S +5.8 over E_both [+3.1, +8.5] | T +6.7 over E_both [+4.3, +9.1] | W +6.1 over E_both [+3.6, +8.6] | C +8.6 over E_both [+5.7, +11.3] | E_both-E +0.7
+esc500   seg: S +2.1 over E [-0.3, +4.6], R 0.64 | T +4.2 over E [+1.6, +6.8], R 0.67 | W +5.3 over E [+2.9, +7.5], R 0.77 | T-S +2.1
+         both:S +4.0 over E_both [+1.6, +6.5] | T +5.8 over E_both [+3.3, +8.2] | W +7.1 over E_both [+4.4, +9.7] | C +9.0 over E_both [+6.1, +11.7] | E_both-E -3.1

@@ -1,0 +1,34 @@
+{
+ "detection": {
+  "n": 3000,
+  "children": 816,
+  "patients": 874,
+  "linked_pairs_split": 0,
+  "sha256": "29629ee58636f686b2c97e12c1051a5b4d0d298fb3fcf20b7c5972454deaf7cd",
+  "file": "detection.npz"
+ },
+ "grading": {
+  "n": 610,
+  "children": 160,
+  "patients": 178,
+  "linked_pairs_split": 0,
+  "sha256": "2904efb0ac9947e71828193b97e3309c8388ed35d8c9732f83b1a5ea59e10a4a",
+  "file": "grading.npz"
+ },
+ "timing": {
+  "n": 606,
+  "children": 159,
+  "patients": 177,
+  "linked_pairs_split": 0,
+  "sha256": "2d4731e58e15d813eea6ad82071cc0182c645af7784933d3e8fd5106b96a35f4",
+  "file": "timing.npz"
+ },
+ "shape": {
+  "n": 603,
+  "children": 158,
+  "patients": 176,
+  "linked_pairs_split": 0,
+  "sha256": "6d65dd9cf2ba0af01c48e6ae5066d4a70b15ba62729373ab34330568a90a7108",
+  "file": "shape.npz"
+ }
+}

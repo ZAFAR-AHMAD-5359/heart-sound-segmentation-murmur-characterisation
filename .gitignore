@@ -1,4 +1,7 @@
 __pycache__/
 *.pyc
-results/
+.pytest_cache/
+.ipynb_checkpoints/
 .venv/
+# output folder of first_submission_code/run_pipeline.py
+/first_submission_code/results/

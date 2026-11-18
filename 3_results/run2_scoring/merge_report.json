@@ -1,0 +1,30 @@
+{
+ "e_reproduced": {
+  "detection": {
+   "predictions_identical": true,
+   "mlp_proba_max_abs_diff": 0.0
+  },
+  "grading": {
+   "predictions_identical": true,
+   "mlp_proba_max_abs_diff": 0.0
+  },
+  "timing": {
+   "predictions_identical": true,
+   "mlp_proba_max_abs_diff": 0.0
+  },
+  "shape": {
+   "predictions_identical": true,
+   "mlp_proba_max_abs_diff": 0.0
+  }
+ },
+ "rows_aligned": {
+  "detection": true,
+  "grading": true,
+  "timing": true,
+  "shape": true
+ },
+ "run1_oof_sha256": "eeeb2b95237a0fe610b9f97797acdc5cea40c2354ce75deeb46febbccee57bcb",
+ "run2_oof_sha256": "27ca43a812b02be88b918e1f0dc774a6a6fcc4abe1c2a01bfe0e43e0872d74d7",
+ "merged_oof_sha256": "26ad15c9729037a37e05993b8231e66f4b31e5e92a8d435075025efe295ab944",
+ "stats_py_sha256": "b44d78a882f7574c90749ea078cc773bee83da802a67b5d148f692362b526b3a"
+}

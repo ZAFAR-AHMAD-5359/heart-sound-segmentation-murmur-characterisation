@@ -1,0 +1,171 @@
+{
+ "created": "2026-10-30T00:23:01+05:00",
+ "smoke": false,
+ "gpu": "NVIDIA A100-SXM4-80GB",
+ "cfg": {
+  "crop_frames": 3000,
+  "batch": 64,
+  "lr": 0.002,
+  "weight_decay": 0.01,
+  "epochs": 40,
+  "steps_per_epoch": 300,
+  "p_warp": 0.5,
+  "hr_range": [
+   70.0,
+   180.0
+  ],
+  "p_noise": 0.5,
+  "p_murmur": 0.3,
+  "p_tilt": 0.5,
+  "p_fmask": 0.3,
+  "shares": {
+   "hfref": 0.35,
+   "cinc2016a": 0.15,
+   "ephnogram": 0.15,
+   "senssmart": 0.12,
+   "foster": 0.12,
+   "bsslab": 0.11
+  },
+  "val_crop_frames": 7500,
+  "val_crops_per_record": 1,
+  "val_max_records_per_dataset": 60,
+  "val_warp_hr": [
+   110.0,
+   170.0
+  ],
+  "tolerance": [
+   0.05,
+   0.1
+  ],
+  "grad_clip": 1.0,
+  "workers": 10,
+  "eval_workers": 10
+ },
+ "modules_sha256": {
+  "__init__.py": "012ad603c7da722a8234aa407cbb3b75ce077f4807d0fd0f96a9b6314b8cde63",
+  "config.py": "44c1796b2abaa55b39de7c4caba121a941b5e789b695e74dacc83d7a6579eb68",
+  "frontend.py": "d40f7c891441982239c8a71577e85abada77a3966619e908b97c331bc6f65760",
+  "augment.py": "663e6ff7409db4dcc9d2156cd1e3a6d3de142b71846f458ef17fd02eb8daf068",
+  "losses.py": "cea4c2edf661889705bf8bdc627d06c545ca631cd1446f0a355d20b302970440",
+  "model.py": "2b73aecb8543b04398cc6ceb2f8a7630662d273b333f3458f6948c6186014b95",
+  "robust_beats.py": "09bb9d7f22105eefd31cd7ae883da95af98e7d05dd8e126c8e20799035d4c077",
+  "decoder.py": "daa8797c9a475e2085b1298ad224563a68080c54ec5c3b7beb47b9b2099913ed",
+  "corpus.py": "fc40a7a9db54292898b0911789b1389aa038eb1f3d3091be7d1ec25068800ba6",
+  "train.py": "06c4afd84894eccf2bc10ac95e914b4dd7dbc504ba6e601325848dbf6d230d82"
+ },
+ "laws_sha256": "850c77aceb747522f4d73e695f927f67f19c98394c8e5afb8a08790cbe603720",
+ "label_check": {
+  "status": "REPORTED, NOT REQUIRED (EXP2_PREREG.md)",
+  "acoustic_gate": {
+   "method": "extstudy/refcheck.py evaluate(): mark inside the annotated complex of the same sound widened by 20 ms (s1_ok, s2_ok); within 100 ms of its centre (s1_wide, s2_wide); valid beats of training-a records outside annotated noise; record-clustered bootstrap 95% CI (2000 draws, seed 42)",
+   "status": "REPORTED, NOT REQUIRED (EXP2_PREREG.md)",
+   "annotation_files": 409,
+   "tol_ms": 20.0,
+   "wide_ms": 100.0,
+   "acoustic": {
+    "version": "labels_acoustic_v1",
+    "beats": 5879,
+    "records": 242,
+    "s1_ok": [
+     0.9967681578499745,
+     0.9917068808750564,
+     1.0
+    ],
+    "s2_ok": [
+     0.99659806089471,
+     0.9916516113310854,
+     0.9998230197865107
+    ],
+    "s1_wide": [
+     0.9967681578499745,
+     0.9917068808750564,
+     1.0
+    ],
+    "s2_wide": [
+     0.9974485456710325,
+     0.9937806171311,
+     1.0
+    ],
+    "s1_offset_ms": {
+     "median": -24.74389160054713,
+     "p25": -34.979411284103534,
+     "p75": -12.066988394475953,
+     "abs_p95": 46.87498723166693
+    },
+    "s2_offset_ms": {
+     "median": -25.771630436757675,
+     "p25": -33.3958633214384,
+     "p75": -18.649965773830157,
+     "abs_p95": 46.05152530886609
+    }
+   },
+   "ecg_v3_reference": {
+    "version": "labels_v3",
+    "beats": 5805,
+    "records": 240,
+    "s1_ok": [
+     0.9998277347114557,
+     0.9994506824267491,
+     1.0
+    ],
+    "s2_ok": [
+     0.9987941429801895,
+     0.99761493047405,
+     0.9996594135758854
+    ],
+    "s1_wide": [
+     1.0,
+     1.0,
+     1.0
+    ],
+    "s2_wide": [
+     0.9993109388458226,
+     0.9985802196151069,
+     0.9998346574511346
+    ],
+    "s1_offset_ms": {
+     "median": -24.647506970332245,
+     "p25": -34.91772076584709,
+     "p75": -12.180209248409568,
+     "abs_p95": 46.60255849691346
+    },
+    "s2_offset_ms": {
+     "median": -25.98803879932543,
+     "p25": -33.88293662454656,
+     "p75": -18.731936314908992,
+     "abs_p95": 46.49463648107712
+    }
+   }
+  }
+ },
+ "acoustic_events": {
+  "version": "labels_acoustic_v1",
+  "file": "events_paired_v3.npz",
+  "sha256": "663277f316cce20347a577acb672181b12430b2433a25e7a0a92625b8e3173b4"
+ },
+ "exp2_plan_sha256": "f0b9fe2b9ddc76a2ffaa0c170cf13d0392e5e68f7a65a4dcdfbf190e5a31a184",
+ "pack_manifest_sha256": "21e2671215a15feee3ac96d87a9e4c644a936992ade9da97f2eb3e8516d084fd",
+ "models": {
+  "A_seed11": {
+   "weights_sha256": "a63aee480f2e075d14ac572b670cb6b90f39ce8797497260d5ba00ad3536f2aa",
+   "file_sha256": "5ecdf0aaac95aecdb613ed2e1037ae2068a815b78d91ab09222398e02992d343",
+   "best_val": 0.9396782915490598,
+   "best_epoch": 13,
+   "minutes": 19.386461742719014
+  },
+  "A_seed22": {
+   "weights_sha256": "fd9ac3255bada0eb052870bbb598fdecb4d09c0c6186b3989400f5ab7c96d5aa",
+   "file_sha256": "8840b145b854fffd290ac1cf9bd48b15a7b07c108c9f7e426a4ee3fb1c764c30",
+   "best_val": 0.9356776911402258,
+   "best_epoch": 17,
+   "minutes": 19.359427138169607
+  },
+  "A_seed33": {
+   "weights_sha256": "83048884011c96e6246ca4d0accf28eb7b300644e0c4e81b6a81b8beb4d6737f",
+   "file_sha256": "9106e29cf9300f4f9149e3fbca17a17c6133f0e417f6e0e736788252753b5350",
+   "best_val": 0.9408420122657316,
+   "best_epoch": 26,
+   "minutes": 19.33966590563456
+  }
+ }
+}

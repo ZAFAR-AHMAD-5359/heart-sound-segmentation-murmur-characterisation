@@ -1,0 +1,53 @@
+{
+ "created": "2026-10-16T16:32:20+05:00",
+ "prereg_sha256": "755b47da43b250671391aae8672b182278cb4561314343581024ab1f581d8974",
+ "changes_after_freeze_sha256": "b78ce32d0dd04ee1c91f3dff92ba9342a4f4ca4935f6a5306d0401c81bf9bc5e",
+ "run1_notebook_source_sha256": "23698703b343ed4f74ff1618576e61b43e0412506f2cdc1c9368dc19a4effb5c",
+ "run1_notebook_file_sha256": "c8bb52371f6f3596417c409212bef0546748f9bc79ebd116c0f52f40dfbc3cba",
+ "cnn_notebook_file_sha256": "5f0fd7133eb4ff32a214360cbbf1806414cb0a7ff32223ce9b799e2aaad92405",
+ "build_run1_sha256": "24d3a40d1712a937c47cdad0bb6bb2b33c4f3e7b4cd79d500dbf5857e33d1354",
+ "build_cnn_run1_sha256": "0de395b31d02469d0c02afa44e54131e0fbbaf80529405a5211b6a01b587132a",
+ "r1_base_notebook_source_sha256": "8b233013dca2d7277cb73213f61c89f3282efbe286f020e67abe4d328925291e",
+ "embedded": {
+  "folds_sha256": {
+   "detection": "29629ee58636f686b2c97e12c1051a5b4d0d298fb3fcf20b7c5972454deaf7cd",
+   "grading": "2904efb0ac9947e71828193b97e3309c8388ed35d8c9732f83b1a5ea59e10a4a",
+   "shape": "6d65dd9cf2ba0af01c48e6ae5066d4a70b15ba62729373ab34330568a90a7108",
+   "timing": "2d4731e58e15d813eea6ad82071cc0182c645af7784933d3e8fd5106b96a35f4"
+  },
+  "pinned_keep_n": 3000,
+  "springer_params_sha256": {
+   "Springer_B_matrix.mat": "457621a433dc5ca6bd9faa80b63fdd427b176eba9ab2c888a803dbbf85ab35ea",
+   "Springer_pi_vector.mat": "dbcd79495dc89bae1e1c48a1a0f58c0667ab3cb3992a10bd87610b5962a5fed9",
+   "Springer_total_obs_distribution.mat": "54949bf43814373b2028e23659619af2e27e4a97f7fbe2a9334996eb7d297fd3"
+  },
+  "springer_src_sha256": "33bf4c10b8ab6d1041c8eb951317c40400ff7cb735d39c1a6e2e0406991499f7"
+ },
+ "history": [
+  {
+   "created": "2026-10-16T16:08:17+05:00",
+   "prereg_sha256": "755b47da43b250671391aae8672b182278cb4561314343581024ab1f581d8974",
+   "run1_notebook_source_sha256": "7fc2777ec3882945afd9e13319c153b551eba262df2c86cd03993f77c94dfaea",
+   "run1_notebook_file_sha256": "e74ce78d29e12c598664d15d3f6d002485ae12f8a8cb0f1224257cb8ffa2dc8e",
+   "cnn_notebook_file_sha256": "90568dec91f46817c63d85b68f94a5c764e07732415937a245513d1f07b8b951",
+   "build_run1_sha256": "51e86a20cbb4a7c6f826cf54c68586886b5e8d1d03497d8d1b8976d56f971fe9",
+   "build_cnn_run1_sha256": "ebc2128db7c15a45e0886eab4451b60153928e11db7eab6ceb4b7a347a3cfacc",
+   "r1_base_notebook_source_sha256": "8b233013dca2d7277cb73213f61c89f3282efbe286f020e67abe4d328925291e",
+   "embedded": {
+    "folds_sha256": {
+     "detection": "29629ee58636f686b2c97e12c1051a5b4d0d298fb3fcf20b7c5972454deaf7cd",
+     "grading": "2904efb0ac9947e71828193b97e3309c8388ed35d8c9732f83b1a5ea59e10a4a",
+     "shape": "6d65dd9cf2ba0af01c48e6ae5066d4a70b15ba62729373ab34330568a90a7108",
+     "timing": "2d4731e58e15d813eea6ad82071cc0182c645af7784933d3e8fd5106b96a35f4"
+    },
+    "pinned_keep_n": 3000,
+    "springer_params_sha256": {
+     "Springer_B_matrix.mat": "457621a433dc5ca6bd9faa80b63fdd427b176eba9ab2c888a803dbbf85ab35ea",
+     "Springer_pi_vector.mat": "dbcd79495dc89bae1e1c48a1a0f58c0667ab3cb3992a10bd87610b5962a5fed9",
+     "Springer_total_obs_distribution.mat": "54949bf43814373b2028e23659619af2e27e4a97f7fbe2a9334996eb7d297fd3"
+    },
+    "springer_src_sha256": "33bf4c10b8ab6d1041c8eb951317c40400ff7cb735d39c1a6e2e0406991499f7"
+   }
+  }
+ ]
+}

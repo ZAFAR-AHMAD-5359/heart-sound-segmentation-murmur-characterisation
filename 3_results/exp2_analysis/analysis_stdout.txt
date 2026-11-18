@@ -1,0 +1,8 @@
+composite: equal_time 43.6, springer_wpk 46.9, springer_pub 48.5, timing_net 49.9, timing_net_ac 50.8, pcg_seg 53.5
+H1 T - T_ac: -0.89 [-3.06, +1.31] -> no difference shown at this precision
+T_ac_minus_E     +7.14 [+4.29, +9.80]
+T_ac_minus_S     +3.84 [+1.25, +6.51]
+T_ac_minus_S_pub +2.23 [-0.40, +4.87]
+recovery at matched coverage: T_ac 0.85 [0.5913445679938237, 1.1426498412219106] | T 0.63 [0.3744852659875882, 0.8842441555061621]
+detection macro-F1: equal_time 71.0, springer_wpk 78.6, timing_net 78.1, timing_net_ac 80.4
+(stdout of the single run of notebooks/exp2_analysis.py on runs/run3/20261029_1955, 30 October 2026; captured from the terminal, the tee redirect having failed because the output folder did not yet exist)

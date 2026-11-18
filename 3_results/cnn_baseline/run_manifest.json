@@ -1,0 +1,785 @@
+{
+ "notebook": "R1_CNN_Baseline.ipynb",
+ "built_by": "build_cnn_baseline.py",
+ "run_started": "2026-10-17T09:06:31",
+ "run_finished": "2026-10-17T12:12:18",
+ "total_seconds": 11147.496888875961,
+ "stage_seconds": {
+  "paths": 647.6551194190979,
+  "labels": 1.4977085590362549,
+  "folds": 2.902108907699585,
+  "chunk_cache": 18.592819929122925,
+  "cross_validation": 8331.996461391449,
+  "scoring": 119.48106741905212,
+  "continuity_original_split": 1876.7476387023926,
+  "figures": 3.946751594543457,
+  "merge_with_gated": 87.82194352149963
+ },
+ "environment": {
+  "colab": true,
+  "device": "cuda",
+  "gpu": "NVIDIA L4",
+  "gpu_memory_gb": 22.0343017578125,
+  "cpu_count": 12,
+  "ram_gb": 52.958106994628906,
+  "versions": {
+   "python": "3.13.15",
+   "numpy": "2.1.3",
+   "pandas": "2.2.3",
+   "scipy": "1.16.3",
+   "librosa": "0.11.0",
+   "sklearn": "1.6.1",
+   "torch": "2.11.0+cu130",
+   "joblib": "1.6.0",
+   "matplotlib": "3.10.0",
+   "cuda": "13.0",
+   "cudnn": 92700
+  },
+  "cudnn_deterministic": true,
+  "amp": false,
+  "matmul_tf32": false,
+  "cudnn_tf32": false
+ },
+ "seeds": {
+  "global": 42,
+  "per_fold_model_seed": "SEED + fold",
+  "inner_validation_seed": 42,
+  "inner_validation_seeds_used": {
+   "murmur": [
+    42,
+    42,
+    42,
+    42,
+    42,
+    42,
+    42,
+    42,
+    42,
+    42
+   ],
+   "grading": [
+    42,
+    42,
+    42,
+    42,
+    43,
+    42,
+    42,
+    42,
+    42,
+    42
+   ],
+   "timing": [
+    42,
+    42,
+    42,
+    42,
+    42,
+    42,
+    42,
+    42,
+    42,
+    43
+   ],
+   "shape": [
+    42,
+    42,
+    42,
+    42,
+    43,
+    42,
+    42,
+    42,
+    42,
+    42
+   ]
+  },
+  "bootstrap": 42,
+  "balancing_rng": "np.random.seed(SEED + fold) before each fold"
+ },
+ "config": {
+  "DRY_RUN": false,
+  "LIMIT_RECORDINGS": null,
+  "SUBSET_N": null,
+  "LABEL_MODE": "patient",
+  "FOLD_SOURCE": "gating",
+  "EPOCHS_RUN": 100,
+  "N_BOOT": 2000,
+  "RUN_CONTINUITY": true,
+  "CACHE_AUG_FEATURES": true,
+  "INNER_VAL_SIZE": 0.15,
+  "JOINT_MAX_ITERATIONS": 10000,
+  "training": {
+   "batch_size": 64,
+   "epochs_max": 100,
+   "lr": 0.001,
+   "weight_decay": 0.0001,
+   "patience": 10,
+   "dropout": 0.3,
+   "scheduler": "ReduceLROnPlateau(max, 0.5, 5)",
+   "loss": "CrossEntropyLoss (sum of three for multilabel)",
+   "monitor": "inner-val AUC / mean of three AUCs"
+  },
+  "mfcc": {
+   "n_mfcc": 40,
+   "n_fft": 512,
+   "hop_length": 160,
+   "n_mels": 64,
+   "fmax": 2000,
+   "frames": 101,
+   "sample_rate": 4000,
+   "chunk_samples": 16000,
+   "min_remainder_samples": 8000
+  }
+ },
+ "paths": {
+  "DRIVE_ROOT": "/content/drive/MyDrive",
+  "TRAINING_DATA_PATH": "/content/circor_local/training_data",
+  "CSV_PATH": "/content/circor_local/training_data.csv",
+  "RUN_DIR": "/content/drive/MyDrive/JBHI-Revision/Extension_Study/runs/run1/20261016_1516",
+  "RUN_DIR_SOURCE": "auto: newest full gating run (_dry and _limitN folders skipped)",
+  "FOLDS_DIR": "/content/drive/MyDrive/JBHI-Revision/Extension_Study/runs/run1/20261016_1516/folds",
+  "OUT_DIR": "/content/drive/MyDrive/JBHI-Revision/Extension_Study/runs/run1/20261016_1516/cnn_baseline"
+ },
+ "run_flags": {
+  "dry_run": false,
+  "limit_recordings": null,
+  "fold_source": "gating",
+  "seed": 42,
+  "epochs": 100,
+  "label_mode": "patient",
+  "use_amp": false,
+  "status": "fresh run: run_flags.json written",
+  "file": "/content/drive/MyDrive/JBHI-Revision/Extension_Study/runs/run1/20261016_1516/cnn_baseline/run_flags.json"
+ },
+ "gating_run_flags": {
+  "dry_run": false,
+  "limit_recordings": 0,
+  "seed": 42,
+  "n_splits": 10,
+  "chunk": 400,
+  "n_min_cycles": 2,
+  "dry_run_subset": null,
+  "run": "extension_run1",
+  "ensemble_seeds": [
+   42,
+   1042,
+   2042,
+   3042,
+   4042
+  ],
+  "groups": "child",
+  "prereg_sha256": "755b47da43b250671391aae8672b182278cb4561314343581024ab1f581d8974"
+ },
+ "cache_events": [],
+ "gating_task_names": {
+  "murmur": "detection",
+  "grading": "grading",
+  "timing": "timing",
+  "shape": "shape"
+ },
+ "dataset": {
+  "n_pairs": 3163,
+  "complete_pairs": 3163,
+  "resolution": "expected path (complete copy)",
+  "n_recordings_index": 3164,
+  "n_patients_index": 942
+ },
+ "filter": {
+  "design_used": "ba",
+  "max_pole_radius_ba": 0.9864116614394438,
+  "pole_radii_ba": [
+   0.5899714506135255,
+   0.5899714506135255,
+   0.8169158141817973,
+   0.8169158141817973,
+   0.9612779335633383,
+   0.9612779335633383,
+   0.9864116614394438,
+   0.9864116614394438
+  ],
+  "per_recording_designs": {
+   "ba": 3000
+  }
+ },
+ "labels": {
+  "mode": "patient",
+  "distributions": {
+   "patient": {
+    "murmur": {
+     "recordings": {
+      "Absent": 2391,
+      "Present": 617
+     },
+     "patients": {
+      "Absent": 695,
+      "Present": 179
+     },
+     "n_recordings_valid": 3008,
+     "n_patients_valid": 874
+    },
+    "grading": {
+     "recordings": {
+      "Grade I": 316,
+      "Grade II": 111,
+      "Grade III": 186
+     },
+     "patients": {
+      "Grade I": 104,
+      "Grade II": 28,
+      "Grade III": 46
+     },
+     "n_recordings_valid": 613,
+     "n_patients_valid": 178
+    },
+    "timing": {
+     "recordings": {
+      "Holosystolic": 341,
+      "Early systolic": 211,
+      "Mid systolic": 57
+     },
+     "patients": {
+      "Holosystolic": 101,
+      "Early systolic": 59,
+      "Mid systolic": 17
+     },
+     "n_recordings_valid": 609,
+     "n_patients_valid": 177
+    },
+    "shape": {
+     "recordings": {
+      "Plateau": 375,
+      "Decrescendo": 124,
+      "Diamond": 107
+     },
+     "patients": {
+      "Plateau": 111,
+      "Decrescendo": 34,
+      "Diamond": 31
+     },
+     "n_recordings_valid": 606,
+     "n_patients_valid": 176
+    }
+   },
+   "location": {
+    "murmur": {
+     "recordings": {
+      "Absent": 2519,
+      "Present": 489
+     },
+     "patients": {
+      "Absent": 764,
+      "Present": 179
+     },
+     "n_recordings_valid": 3008,
+     "n_patients_valid": 874
+    },
+    "grading": {
+     "recordings": {
+      "Grade I": 193,
+      "Grade II": 109,
+      "Grade III": 185
+     },
+     "patients": {
+      "Grade I": 104,
+      "Grade II": 28,
+      "Grade III": 46
+     },
+     "n_recordings_valid": 487,
+     "n_patients_valid": 178
+    },
+    "timing": {
+     "recordings": {
+      "Holosystolic": 288,
+      "Early systolic": 141,
+      "Mid systolic": 58
+     },
+     "patients": {
+      "Holosystolic": 101,
+      "Early systolic": 59,
+      "Mid systolic": 18
+     },
+     "n_recordings_valid": 487,
+     "n_patients_valid": 178
+    },
+    "shape": {
+     "recordings": {
+      "Plateau": 290,
+      "Decrescendo": 85,
+      "Diamond": 112
+     },
+     "patients": {
+      "Plateau": 111,
+      "Decrescendo": 34,
+      "Diamond": 33
+     },
+     "n_recordings_valid": 487,
+     "n_patients_valid": 178
+    }
+   }
+  },
+  "class_names": {
+   "murmur": [
+    "Absent",
+    "Present"
+   ],
+   "grading": [
+    "Grade I",
+    "Grade II",
+    "Grade III"
+   ],
+   "timing": [
+    "Holosystolic",
+    "Early systolic",
+    "Mid systolic"
+   ],
+   "shape": [
+    "Plateau",
+    "Decrescendo",
+    "Diamond"
+   ]
+  }
+ },
+ "chunk_cache": {
+  "cache_key": "d806b49794cc0e29",
+  "n_recordings": 3000,
+  "n_chunks": 17132,
+  "n_audio_chunks_kept": 3410,
+  "filter_designs": {
+   "ba": 3000
+  },
+  "f16_roundtrip_err_std_units": 0.0038951411843299866,
+  "seconds": 15.161918640136719,
+  "built": "2026-10-17T09:18:34",
+  "chunk_count_check_vs_original": null
+ },
+ "folds": {
+  "murmur": {
+   "path": "/content/drive/MyDrive/JBHI-Revision/Extension_Study/runs/run1/20261016_1516/folds/detection.npz",
+   "sha256": "abba904af7eab513f4f0f59c974f11d992ad05db22686527c57342ad3836cbc5",
+   "n_kept_in_file": 3000,
+   "n_eval": 3000,
+   "n_folds": 10,
+   "labels": "0 label disagreements out of 3000",
+   "extra_in_index_not_in_file": 8,
+   "n_recordings_in_test_folds": 3000,
+   "n_folds_run": 10
+  },
+  "grading": {
+   "path": "/content/drive/MyDrive/JBHI-Revision/Extension_Study/runs/run1/20261016_1516/folds/grading.npz",
+   "sha256": "d96e153b49449a4cd39f63255b1bf77e9bf364824231fe23c6fe0604470423cb",
+   "n_kept_in_file": 610,
+   "n_eval": 610,
+   "n_folds": 10,
+   "labels": "0 label disagreements out of 610",
+   "extra_in_index_not_in_file": 3,
+   "n_recordings_in_test_folds": 610,
+   "n_folds_run": 10
+  },
+  "timing": {
+   "path": "/content/drive/MyDrive/JBHI-Revision/Extension_Study/runs/run1/20261016_1516/folds/timing.npz",
+   "sha256": "1b730d37c0ff1105993792440f2b95f07a5d4fd210ec0fb0729ebc2d883138f7",
+   "n_kept_in_file": 606,
+   "n_eval": 606,
+   "n_folds": 10,
+   "labels": "0 label disagreements out of 606",
+   "extra_in_index_not_in_file": 3,
+   "n_recordings_in_test_folds": 606,
+   "n_folds_run": 10
+  },
+  "shape": {
+   "path": "/content/drive/MyDrive/JBHI-Revision/Extension_Study/runs/run1/20261016_1516/folds/shape.npz",
+   "sha256": "59bbe4b9e2d4de97e224268a072c403111ce51cf19389232ca900a3a6e44356a",
+   "n_kept_in_file": 603,
+   "n_eval": 603,
+   "n_folds": 10,
+   "labels": "0 label disagreements out of 603",
+   "extra_in_index_not_in_file": 3,
+   "n_recordings_in_test_folds": 603,
+   "n_folds_run": 10
+  }
+ },
+ "subset": null,
+ "deviations": [
+  {
+   "item": "early stopping",
+   "detail": "the original guard (if early_stopping(score): if early_stopping.early_stop: break) could never trigger; here training stops when patience (10) is exhausted"
+  },
+  {
+   "item": "best state",
+   "detail": "the original best_model_state was a shallow copy of the live state_dict; here a detached copy is restored"
+  },
+  {
+   "item": "early-stopping set",
+   "detail": "patient-disjoint inner validation split (GroupShuffleSplit 0.15, seed 42) instead of the chunk-level 80/20 re-split of pooled train+val chunks"
+  },
+  {
+   "item": "online augmentation",
+   "detail": "applied to cached MFCC maps in the feature domain. Gain: exact, c0 offset sqrt(n_mels)*20*log10(g) in every frame, deltas unchanged (asserted at runtime). Shift: approximate, circular roll of round(shift/hop) frames. Against an audio-domain roll with re-extraction, a whole-frame shift differs in 6 to 8 frames at each edge (centred reflect padding, delta interpolation); a sub-frame shift (the general case) differs in every frame by a small amount (rms about 0.02 to 0.07 standardised units, up to 3.3 at the edges); |shift| below 80 samples (about 10% of the draws) rounds to zero frames and does nothing"
+  },
+  {
+   "item": "feature cache",
+   "detail": "MFCC maps stored standardised in float16 with float32 mean/std; fresh and resumed runs use the same round-tripped values (max error 3.9e-03 map-std units)"
+  },
+  {
+   "item": "joint balancing",
+   "detail": "vectorised planner with the verbatim selection rule (checked against the pandas loop); pool restricted to chunks with all three labels valid before balancing (the original dropped them after balancing, at load time)"
+  },
+  {
+   "item": "batching",
+   "detail": "shuffled GPU-resident tensors instead of a DataLoader (shuffle=True, batch 64, single-sample last batch skipped as BatchNorm requires)"
+  },
+  {
+   "item": "scoring",
+   "detail": "recording level (mean chunk softmax, argmax) is primary; chunk level reported alongside"
+  }
+ ],
+ "verbatim_blocks": {
+  "augmentation": {
+   "names": [
+    "time_shift",
+    "amplitude_scale",
+    "add_noise",
+    "time_stretch",
+    "AUGMENTATION_COMBOS",
+    "augment_audio"
+   ],
+   "notebook": "MILESTONE3_DATA_AUGMENTATION_V5.ipynb",
+   "sha256": "6d646f498ee1f02b91a18dcca95b276b22349961cac49b6fbcaedaf10a5cd95e"
+  },
+  "conv_attention_blocks": {
+   "names": [
+    "AttentionBlock",
+    "ConvBlock"
+   ],
+   "notebook": "MILESTONE3_MODEL_TRAINING.ipynb",
+   "sha256": "d4b0343097aac73c58a94dc0a3862458e941848531049a2b0fc5d0ea7026f3d0"
+  },
+  "dataprep_config": {
+   "names": [
+    "CONFIG"
+   ],
+   "notebook": "MILESTONE3_DATA_PREPARATION.ipynb",
+   "sha256": "c5aab445e2e78d1ecae34dae62e2e95978a3862f56fc27ca8b7f931d32b1bb75"
+  },
+  "dataprep_functions": {
+   "names": [
+    "load_audio",
+    "bandpass_filter",
+    "normalize_zscore",
+    "create_chunks_circular"
+   ],
+   "notebook": "MILESTONE3_DATA_PREPARATION.ipynb",
+   "sha256": "817f54f96ccbc8e0565c5a777ec65b3761847aace260a88f3ed4a65e001695bb"
+  },
+  "early_stopping": {
+   "names": [
+    "EarlyStopping"
+   ],
+   "notebook": "MILESTONE3_MODEL_TRAINING.ipynb",
+   "sha256": "e1c5c5c45bb8b7856ed17e9e0099b9e81a1b0efc2c8b8d471481705c2fe3c809"
+  },
+  "joint_balancing_scorers": {
+   "names": [
+    "calculate_stage_distributions",
+    "calculate_imbalance_scores",
+    "score_candidate",
+    "is_balanced"
+   ],
+   "notebook": "MILESTONE3_DATA_AUGMENTATION_V5.ipynb",
+   "sha256": "bf293fbfef6861421a3ed4b1c16126391c68e17961b2caa1d8eb0916a1b4be6a"
+  },
+  "location_labels": {
+   "names": [
+    "is_murmur_audible_at_location",
+    "get_murmur_characteristics"
+   ],
+   "notebook": "MILESTONE3_DATA_PREPARATION.ipynb",
+   "sha256": "5b495969156ffb1b77d95124b576f8ecc81227385e50cc4c9f91c41102b7bc48"
+  },
+  "mfcc_extractor": {
+   "names": [
+    "extract_mfcc_from_array"
+   ],
+   "notebook": "MILESTONE3_MODEL_TRAINING.ipynb",
+   "sha256": "68a647ec3face10f404856e4f4e306c32d9e3a7115e2e700c18814d898d31baf"
+  },
+  "multilabel_classifier": {
+   "names": [
+    "MultiLabelClassifier"
+   ],
+   "notebook": "MILESTONE3_MODEL_TRAINING.ipynb",
+   "sha256": "09f4e40175dfc427de0ce44c366983504e6dff7cd19d7b9fce3d4c337b3ba160"
+  },
+  "murmur_classifier": {
+   "names": [
+    "MurmurClassifier"
+   ],
+   "notebook": "MILESTONE3_MODEL_TRAINING.ipynb",
+   "sha256": "23047b48ba045769ed471a4efb84f2447d802d38db158ab5240eb28a050113eb"
+  },
+  "patient_labels_m4": {
+   "names": [
+    "get_recording_labels"
+   ],
+   "notebook": "MILESTONE4_TEMPORAL_V4.ipynb",
+   "sha256": "f83bce078573cde5ca9532e97540f26c53761c556bf6c295158b5f063dce2ce9"
+  },
+  "snippet:chunk_level_es_split": {
+   "notebook": "MILESTONE3_MODEL_TRAINING.ipynb",
+   "sha256": "3b19b954f5bd2ac9d19f27fb0afd674597f87744dccde90fec2ddb5b5a38dd13"
+  },
+  "snippet:config_chunk_samples": {
+   "notebook": "MILESTONE3_DATA_PREPARATION.ipynb",
+   "sha256": "65e15c38f738dd185f4b68c98b9668d14f5797293d4c0e08ef96e2c2082763ce"
+  },
+  "snippet:config_min_remainder": {
+   "notebook": "MILESTONE3_DATA_PREPARATION.ipynb",
+   "sha256": "ef433e415cad59d92c81e3b9c8acc36dabdc68f98fb38312f229b478c0b1d4a9"
+  },
+  "snippet:criterion": {
+   "notebook": "MILESTONE3_MODEL_TRAINING.ipynb",
+   "sha256": "5ee9e3b0448736fcf89ff84ba7be322f553c632070fc2419c0872de46e7b444c"
+  },
+  "snippet:early_stopping_cfg": {
+   "notebook": "MILESTONE3_MODEL_TRAINING.ipynb",
+   "sha256": "17bdf480b70d54c3f2228ef576d1f1f654c6aeee895b806b71b3d7e6af8f8afd"
+  },
+  "snippet:joint_loop_core": {
+   "notebook": "MILESTONE3_DATA_AUGMENTATION_V5.ipynb",
+   "sha256": "51cfb32ef838511df156debf6b7c1c4ab8333a823a5c068fce4aef0b82821ba6"
+  },
+  "snippet:joint_max_iter": {
+   "notebook": "MILESTONE3_DATA_AUGMENTATION_V5.ipynb",
+   "sha256": "1a5e89e3e2937bc28e1557299c1be5e4ae133dd05a78cf7803beedcb43a03969"
+  },
+  "snippet:joint_tolerance": {
+   "notebook": "MILESTONE3_DATA_AUGMENTATION_V5.ipynb",
+   "sha256": "f9e0156d90779f526ffb26c1626fa33086f0acd9d8de59e57226bfa989e1ae20"
+  },
+  "snippet:monitor_multilabel": {
+   "notebook": "MILESTONE3_MODEL_TRAINING.ipynb",
+   "sha256": "8c31cdc7e311ecf7c838fafc74461a1dcbce10160ef228bb9a7c08b5711f3616"
+  },
+  "snippet:monitor_murmur": {
+   "notebook": "MILESTONE3_MODEL_TRAINING.ipynb",
+   "sha256": "7b27fa640bf02c510f4cc90cb78cd6bc8510ce6dc9030890e231338764eae776"
+  },
+  "snippet:multilabel_loss": {
+   "notebook": "MILESTONE3_MODEL_TRAINING.ipynb",
+   "sha256": "1f3dc1b76922ec088d64a57245547d7ca6b086af17e9ab24e910b663b27d0ac9"
+  },
+  "snippet:multilabel_shuffle": {
+   "notebook": "MILESTONE3_DATA_AUGMENTATION_V5.ipynb",
+   "sha256": "b3f44db5a324a8e3b7cdb2ae111ee4d98745a66e572c25559bb326e748894cf9"
+  },
+  "snippet:murmur_oversampling_loop": {
+   "notebook": "MILESTONE3_DATA_AUGMENTATION_V5.ipynb",
+   "sha256": "a4c297d660794cb80df07d3e29bb6fa4ab82de3864f7c561a796ed2c9eb9ed7b"
+  },
+  "snippet:murmur_shuffle": {
+   "notebook": "MILESTONE3_DATA_AUGMENTATION_V5.ipynb",
+   "sha256": "a1c7015725211a97128938f9075df989ccc12dd2dca6f346c14cf66efc167916"
+  },
+  "snippet:murmur_target": {
+   "notebook": "MILESTONE3_DATA_AUGMENTATION_V5.ipynb",
+   "sha256": "c359caf473d29ac4e0433ab9c18a1996dd86995fd6988820cb0d33040d900782"
+  },
+  "snippet:online_gain": {
+   "notebook": "MILESTONE3_MODEL_TRAINING.ipynb",
+   "sha256": "2eda73c304f7b42c9f4168e0bd6ba3eb3347464fc498440cc6b7044311f47ea0"
+  },
+  "snippet:online_shift": {
+   "notebook": "MILESTONE3_MODEL_TRAINING.ipynb",
+   "sha256": "0ad5f3dbb2c89bcf9e92b739bcfaebfe3daa19b0c046a387e3a7bc653983b21a"
+  },
+  "snippet:optimizer": {
+   "notebook": "MILESTONE3_MODEL_TRAINING.ipynb",
+   "sha256": "5e6640e0d58dadf7f8ce8523f67ab45fa274ebaa3f0b6cfb283cc4c25fc4cb4a"
+  },
+  "snippet:per_sample_standardisation": {
+   "notebook": "MILESTONE3_MODEL_TRAINING.ipynb",
+   "sha256": "903e8c88354bf2ee33540442329f8f2375419352ae53a0ac102cdd6f546c1c0d"
+  },
+  "snippet:scheduler": {
+   "notebook": "MILESTONE3_MODEL_TRAINING.ipynb",
+   "sha256": "1eff1ce6632eddd83ca9c41e577a44cdd666899baf6f15acd0b2e25038c0efee"
+  },
+  "snippet:split_first": {
+   "notebook": "MILESTONE3_DATA_PREPARATION.ipynb",
+   "sha256": "6177e0e86938c7758b09a09ea63b5693cd67f29ca4ba94521055642172d0d5ec"
+  },
+  "snippet:split_patients": {
+   "notebook": "MILESTONE3_DATA_PREPARATION.ipynb",
+   "sha256": "b82afeaa63a5bc209c33f9bc745edd320b41d063938a229aff5dfebb82ab0c29"
+  },
+  "snippet:split_second": {
+   "notebook": "MILESTONE3_DATA_PREPARATION.ipynb",
+   "sha256": "83a917da3215a81a63708bb25c79ff53167cf87c93692d10aab9ac0295dddafa"
+  },
+  "snippet:wav_parse_1": {
+   "notebook": "MILESTONE3_DATA_PREPARATION.ipynb",
+   "sha256": "ddd8032953cd3d651d3bf93d2327342a63df85934267ceba829134a2d055d5ec"
+  },
+  "snippet:wav_parse_2": {
+   "notebook": "MILESTONE3_DATA_PREPARATION.ipynb",
+   "sha256": "9e5341044d16a3fc364eadacbdd71f0f5f4043d59751e722b8cbc91bb8482647"
+  },
+  "training_constants": {
+   "names": [
+    "SAMPLE_RATE",
+    "DURATION",
+    "N_SAMPLES",
+    "N_MFCC",
+    "N_FFT",
+    "HOP_LENGTH",
+    "N_MELS",
+    "FMAX",
+    "BATCH_SIZE",
+    "EPOCHS",
+    "LEARNING_RATE",
+    "WEIGHT_DECAY",
+    "PATIENCE",
+    "VAL_SPLIT",
+    "DROPOUT"
+   ],
+   "notebook": "MILESTONE3_MODEL_TRAINING.ipynb",
+   "sha256": "4f287318e0e26e30c4ad4338525a3013bd4c90decf082bbafe6b553496f8c04b"
+  }
+ },
+ "outputs": [
+  "cache/preds_patient_grading_fold0.npz",
+  "cache/preds_patient_grading_fold1.npz",
+  "cache/preds_patient_grading_fold2.npz",
+  "cache/preds_patient_grading_fold3.npz",
+  "cache/preds_patient_grading_fold4.npz",
+  "cache/preds_patient_grading_fold5.npz",
+  "cache/preds_patient_grading_fold6.npz",
+  "cache/preds_patient_grading_fold7.npz",
+  "cache/preds_patient_grading_fold8.npz",
+  "cache/preds_patient_grading_fold9.npz",
+  "cache/preds_patient_murmur_fold0.npz",
+  "cache/preds_patient_murmur_fold1.npz",
+  "cache/preds_patient_murmur_fold2.npz",
+  "cache/preds_patient_murmur_fold3.npz",
+  "cache/preds_patient_murmur_fold4.npz",
+  "cache/preds_patient_murmur_fold5.npz",
+  "cache/preds_patient_murmur_fold6.npz",
+  "cache/preds_patient_murmur_fold7.npz",
+  "cache/preds_patient_murmur_fold8.npz",
+  "cache/preds_patient_murmur_fold9.npz",
+  "cache/preds_patient_shape_fold0.npz",
+  "cache/preds_patient_shape_fold1.npz",
+  "cache/preds_patient_shape_fold2.npz",
+  "cache/preds_patient_shape_fold3.npz",
+  "cache/preds_patient_shape_fold4.npz",
+  "cache/preds_patient_shape_fold5.npz",
+  "cache/preds_patient_shape_fold6.npz",
+  "cache/preds_patient_shape_fold7.npz",
+  "cache/preds_patient_shape_fold8.npz",
+  "cache/preds_patient_shape_fold9.npz",
+  "cache/preds_patient_timing_fold0.npz",
+  "cache/preds_patient_timing_fold1.npz",
+  "cache/preds_patient_timing_fold2.npz",
+  "cache/preds_patient_timing_fold3.npz",
+  "cache/preds_patient_timing_fold4.npz",
+  "cache/preds_patient_timing_fold5.npz",
+  "cache/preds_patient_timing_fold6.npz",
+  "cache/preds_patient_timing_fold7.npz",
+  "cache/preds_patient_timing_fold8.npz",
+  "cache/preds_patient_timing_fold9.npz",
+  "cache/train_patient_grading_fold0.json",
+  "cache/train_patient_grading_fold1.json",
+  "cache/train_patient_grading_fold2.json",
+  "cache/train_patient_grading_fold3.json",
+  "cache/train_patient_grading_fold4.json",
+  "cache/train_patient_grading_fold5.json",
+  "cache/train_patient_grading_fold6.json",
+  "cache/train_patient_grading_fold7.json",
+  "cache/train_patient_grading_fold8.json",
+  "cache/train_patient_grading_fold9.json",
+  "cache/train_patient_murmur_fold0.json",
+  "cache/train_patient_murmur_fold1.json",
+  "cache/train_patient_murmur_fold2.json",
+  "cache/train_patient_murmur_fold3.json",
+  "cache/train_patient_murmur_fold4.json",
+  "cache/train_patient_murmur_fold5.json",
+  "cache/train_patient_murmur_fold6.json",
+  "cache/train_patient_murmur_fold7.json",
+  "cache/train_patient_murmur_fold8.json",
+  "cache/train_patient_murmur_fold9.json",
+  "cache/train_patient_shape_fold0.json",
+  "cache/train_patient_shape_fold1.json",
+  "cache/train_patient_shape_fold2.json",
+  "cache/train_patient_shape_fold3.json",
+  "cache/train_patient_shape_fold4.json",
+  "cache/train_patient_shape_fold5.json",
+  "cache/train_patient_shape_fold6.json",
+  "cache/train_patient_shape_fold7.json",
+  "cache/train_patient_shape_fold8.json",
+  "cache/train_patient_shape_fold9.json",
+  "cache/train_patient_timing_fold0.json",
+  "cache/train_patient_timing_fold1.json",
+  "cache/train_patient_timing_fold2.json",
+  "cache/train_patient_timing_fold3.json",
+  "cache/train_patient_timing_fold4.json",
+  "cache/train_patient_timing_fold5.json",
+  "cache/train_patient_timing_fold6.json",
+  "cache/train_patient_timing_fold7.json",
+  "cache/train_patient_timing_fold8.json",
+  "cache/train_patient_timing_fold9.json",
+  "figures/B1_cnn_baseline_macro_f1_recording.pdf",
+  "figures/B1_cnn_baseline_macro_f1_recording.png",
+  "figures/B2_baseline_vs_gated_forest.pdf",
+  "figures/B2_baseline_vs_gated_forest.png",
+  "figures/B3_chunk_vs_recording_level.pdf",
+  "figures/B3_chunk_vs_recording_level.png",
+  "figures/B4_confusion_matrices_recording.pdf",
+  "figures/B4_confusion_matrices_recording.png",
+  "models/patient_grading_fold0.pt",
+  "models/patient_grading_fold1.pt",
+  "models/patient_grading_fold2.pt",
+  "models/patient_grading_fold3.pt",
+  "models/patient_grading_fold4.pt",
+  "models/patient_grading_fold5.pt",
+  "models/patient_grading_fold6.pt",
+  "models/patient_grading_fold7.pt",
+  "models/patient_grading_fold8.pt",
+  "models/patient_grading_fold9.pt",
+  "models/patient_murmur_fold0.pt",
+  "models/patient_murmur_fold1.pt",
+  "models/patient_murmur_fold2.pt",
+  "models/patient_murmur_fold3.pt",
+  "models/patient_murmur_fold4.pt",
+  "models/patient_murmur_fold5.pt",
+  "models/patient_murmur_fold6.pt",
+  "models/patient_murmur_fold7.pt",
+  "models/patient_murmur_fold8.pt",
+  "models/patient_murmur_fold9.pt",
+  "models/patient_shape_fold0.pt",
+  "models/patient_shape_fold1.pt",
+  "models/patient_shape_fold2.pt",
+  "models/patient_shape_fold3.pt",
+  "models/patient_shape_fold4.pt",
+  "models/patient_shape_fold5.pt",
+  "models/patient_shape_fold6.pt",
+  "models/patient_shape_fold7.pt",
+  "models/patient_shape_fold8.pt",
+  "models/patient_shape_fold9.pt",
+  "models/patient_timing_fold0.pt",
+  "models/patient_timing_fold1.pt",
+  "models/patient_timing_fold2.pt",
+  "models/patient_timing_fold3.pt",
+  "models/patient_timing_fold4.pt",
+  "models/patient_timing_fold5.pt",
+  "models/patient_timing_fold6.pt",
+  "models/patient_timing_fold7.pt",
+  "models/patient_timing_fold8.pt",
+  "models/patient_timing_fold9.pt",
+  "oof_predictions.npz",
+  "paired_vs_gated.json",
+  "results.json",
+  "run_flags.json"
+ ],
+ "paired_vs_gated_status": "ok"
+}

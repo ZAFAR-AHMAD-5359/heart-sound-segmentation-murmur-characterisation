@@ -1,0 +1,20 @@
+{
+ "dry_run": false,
+ "limit_recordings": 0,
+ "seed": 42,
+ "n_splits": 10,
+ "chunk": 400,
+ "n_min_cycles": 2,
+ "dry_run_subset": null,
+ "run": "exp1_inband_noise",
+ "ensemble_seeds": [
+  42,
+  1042,
+  2042,
+  3042,
+  4042
+ ],
+ "groups": "child",
+ "exp1_plan_sha256": "c0f0269d27bfed486240ff3a1ce1ca53c05f57531f6c5e05625d875bc1f3df9b",
+ "tw_stamp": "20261018_0908"
+}
