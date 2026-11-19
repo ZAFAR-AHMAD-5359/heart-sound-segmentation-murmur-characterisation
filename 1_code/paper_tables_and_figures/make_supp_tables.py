@@ -45,7 +45,7 @@ stable('tabS_tw_test.tex',
        'corrected for chance agreement, per dataset and seed (beat F1 in the repository), with the validation score that selected each checkpoint '
        '(beat-identity F1 over native and rate-warped validation sets) and its epoch. PhysioNet/CinC 2016 training-a entered training only. '
        'The waveform network missed its pre-set validation criterion (kappa at least 0.5 on every dataset) for seeds 11 and 22 '
-       '(EPHNOGRAM validation kappa 0.43 and 0.45; seed 33: 0.51) and was kept as a secondary arm, as planned.',
+       '(EPHNOGRAM validation kappa 0.43 and 0.45; seed 33: 0.51) and was kept as a secondary method, as planned.',
        'tab:Stw', '@{}l' + 'r' * 7 + '@{}', 'Model & ' + ' & '.join(DSN[d] for d in DS) + ' & Validation & Epoch', rows, size='\\scriptsize')
 
 # ---- S-Subgroups: full table
@@ -67,7 +67,7 @@ stable('tabS_subgroups.tex',
        'Heart-rate bands and infants in full. n counts detection, grading, timing, and shape recordings. C $-$ E is the gain of the expert-reviewed '
        'reference over equal-time windows at full coverage; recovery fractions are at matched coverage and are given only where the gain of the '
        'reference at matched coverage (C $-$ E\\textsubscript{annot}) has an interval above 0 (n.e., not estimable). Composite macro-F1, percentage points, '
-       '95\\% participant-bootstrap intervals with the draws of the full set. Heart rate from the annotated cycles; infants are the CirCor neonate and infant categories.',
+       '95\\% participant-bootstrap intervals with the draws of the full set. Heart rate from the annotated cycles; infants are the neonate and infant categories of the dataset.',
        'tab:Ssubgroups', '@{}llllllll@{}', 'Subset & n & C $-$ E & T $-$ E & W $-$ E & Recovery T & Recovery W & Recovery S', rows, size='\\scriptsize')
 
 # ---- S-Budget: Experiment 0
@@ -106,7 +106,7 @@ rows.append('\\multicolumn{5}{@{}l}{Pooled difference in retention, spread minus
 stable('tabS_exp0b.tex',
        'Experiment 0b: the same boundary error confined to a share of recordings (concentrated) or spread over all recordings. S2 moved by 100\\,ms in every '
        'cycle of the chosen recordings, or in the stated share of the cycles of every recording; retention with 95\\% participant-bootstrap interval, five seeds per level. '
-       'The last two columns give the pooled share of cycles displaced and the share of recordings whose median S2 onset lies more than 60\\,ms from the annotation. '
+       'The last two columns give the pooled share of cycles displaced and the share of recordings whose median S2 start lies more than 60\\,ms from the annotation. '
        'Pre-registered decision: concentration costs more (2.5th percentile of the pooled difference above 0).',
        'tab:Sexp0b', '@{}llllr@{}', 'Condition & Level & Retention [95\\% CI] & Cycles displaced & S2 $>$ 60\\,ms', rows, size='\\scriptsize')
 
@@ -132,7 +132,7 @@ stable('tabS_exp0c.tex',
        'interval; the number of seeds or sets averaged is given. Springer everywhere and W everywhere reproduced Run 1 and Run 2 exactly.',
        'tab:Sexp0c', '@{}lrl@{}', 'Set & Sets & Retention [95\\% CI]', rows, size='\\scriptsize')
 
-# ---- S-Literature: published CirCor results beside this work (participant-grouped macro-F1); published rows kept verbatim
+# ---- S-Literature: published results on the CirCor DigiScope dataset beside this work (participant-grouped macro-F1); published rows kept verbatim
 st = json.load(open(os.path.join(RES, 'run2_scoring', 'stats_results.json')))['mlp']['per_task']
 cnn = json.load(open(os.path.join(RES, 'run1_stats', 'cnn_stats.json')))['per_task']
 pub = open(os.path.join(STAB, '_published_rows.tex'), encoding='utf-8').read().rstrip()
@@ -182,10 +182,10 @@ for k, lab in (('timing_net-equal_time', 'T $-$ E'), ('waveform_net-equal_time',
     d = rc['end_to_end_contrasts'][k]
     rows.append('%s & %s %s & & & & \\\\' % (lab, sgn(d['point']), sci(d['ci95'])))
 stable('tabS_endtoend.tex',
-       'End-to-end characterisation on CirCor: a murmur-present recording that the same arm' + APOS + 's detection model calls absent counts as a '
+       'End-to-end characterisation on the CirCor DigiScope dataset: a murmur-present recording that the same method' + APOS + 's detection model calls absent counts as a '
        'characterisation failure (a false negative for its true class). Macro-F1 in per cent with 95\\% participant-bootstrap intervals; the last column is the share of '
        'grading recordings the detection model missed. Descriptive; defined before computing.',
-       'tab:Sendtoend', '@{}llrrrr@{}', 'Arm & Composite [95\\% CI] & Grading & Timing & Shape & Missed', rows, size='\\scriptsize')
+       'tab:Sendtoend', '@{}llrrrr@{}', 'Method & Composite [95\\% CI] & Grading & Timing & Shape & Missed', rows, size='\\scriptsize')
 
 w = rc['without_pregnant']
 rows = []
@@ -200,7 +200,7 @@ stable('tabS_pregnancy.tex',
        'Sensitivity analysis without the 68 pregnant participants (%d recordings removed from detection; %d, %d, and %d remain for grading, timing, and shape). '
        'Composite macro-F1 with 95\\%% participant-bootstrap intervals and differences in percentage points; recovery fractions at matched coverage.' % (
            w['n_removed_detection'], w['n']['grading'], w['n']['timing'], w['n']['shape']),
-       'tab:Spregnancy', '@{}ll@{}', 'Arm or contrast & Estimate', rows, size='\\scriptsize')
+       'tab:Spregnancy', '@{}ll@{}', 'Method or contrast & Estimate', rows, size='\\scriptsize')
 
 # ---- revision checks 2: detection misses by characterisation class (descriptive; defined after the main results)
 rc2_path = os.path.join(RES, 'revision_checks2', 'revision_checks2.json')
@@ -219,11 +219,11 @@ if os.path.exists(rc2_path):
         rows.append(' & '.join(cells) + ' \\\\')
     ns = {t: ', '.join('%s %d' % (SHORT.get(c, c), mb['E'][t][c]['n']) for c in classes[t]) for t in TASKS}
     stable('tabS_misses.tex',
-           'Share (per cent) of murmur-present recordings that each arm' + APOS + 's own detection model called absent, by class of the '
+           'Share (per cent) of murmur-present recordings that each method' + APOS + 's own detection model called absent, by class of the '
            'characterisation labels (grade: %s; timing: %s; shape: %s recordings); the last column is the share of all grading recordings. '
            'Descriptive; defined after the main results were known.' % (ns['grading'], ns['timing'], ns['shape']),
            'tab:Smisses', '@{}l' + 'r' * (sum(len(v) for v in classes.values()) + 1) + '@{}',
-           'Arm & ' + ' & '.join(SHORT.get(c, c) for t in TASKS for c in classes[t]) + ' & All', rows, size='\\scriptsize')
+           'Method & ' + ' & '.join(SHORT.get(c, c) for t in TASKS for c in classes[t]) + ' & All', rows, size='\\scriptsize')
 
 # ---- S-Noise: Experiment 1, added in-band interference at test time (06_results/exp1_analysis/exp1_results.json);
 #      tabS_noise_seg, tabS_noise_both, tabS_noise_diag in the supplement and tab_noise in the main text
@@ -257,11 +257,11 @@ if os.path.exists(e1_path):
            'Experiment 1, segmentation only: Springer (S), the timing network (T), and the waveform network (W) segment the audio with added in-band '
            'interference (20--500\\,Hz, not locked to the cardiac cycle) at the stated in-band signal-to-noise ratio, and the 464 features are read from the '
            'clean audio with those boundaries (610 murmur-present recordings; composite macro-F1 of grading, timing, and shape; 95\\%% participant-bootstrap '
-           'intervals, 2{,}000 shared draws). Change from the clean arm of the same method; gain over equal-time windows (E, %.1f); retention of the clean gain, '
+           'intervals, 2{,}000 shared draws). Change from the clean version of the same method; gain over equal-time windows (E, %.1f); retention of the clean gain, '
            '$(X_c - E)/(X - E)$ per draw (draws with a non-positive denominator excluded: %d of 2{,}000 for Springer in every condition, none for T and W). '
            'T $-$ S is the timing network against Springer under the same interference (clean: +3.0 [+0.3, +5.7]). %s %s' % (
                comp1['equal_time']['point'], nex, clean_txt, h1_txt),
-           'tab:Snoiseseg', '@{}llllrll@{}', 'Interference & dB & Arm & Composite & Change from clean & Gain over E & Retention', rows, size='\\scriptsize')
+           'tab:Snoiseseg', '@{}llllrll@{}', 'Interference & dB & Method & Composite & Change from clean & Gain over E & Retention', rows, size='\\scriptsize')
     # both stages
     rows = []
     for c, kind, lvl in COND1:
@@ -269,9 +269,9 @@ if os.path.exists(e1_path):
         rows.append(' & '.join([kind, lvl, '%.1f' % comp1['E_both_%s' % c]['point'], pm(oc['extractor']['E_both_minus_E']), pm(oc['extractor']['C_both_minus_C'])] +
                                [pm(oc['both'][a]['gain_over_E_both']) for a in ('S', 'T', 'W', 'C')]) + ' \\\\')
     stable('tabS_noise_both.tex',
-           'Experiment 1, both stages: the boundaries of the segmentation-only arms and the features are both read from the corrupted audio; equal-time windows '
+           'Experiment 1, both stages: the boundaries of the segmentation-only methods and the features are both read from the corrupted audio; equal-time windows '
            '(E\\textsubscript{both}) and the expert-reviewed annotation (C\\textsubscript{both}) take their boundaries from the recording length and the annotation, so '
-           'E\\textsubscript{both} $-$ E and C\\textsubscript{both} $-$ C measure the sensitivity of the feature extractor alone. The last four columns give each arm '
+           'E\\textsubscript{both} $-$ E and C\\textsubscript{both} $-$ C measure the sensitivity of the feature extractor alone. The last four columns give each method '
            'against equal-time windows computed on the same corrupted audio. Composite macro-F1 with 95\\% participant-bootstrap intervals.',
            'tab:Snoiseboth', '@{}llrllllll@{}',
            'Interference & dB & E\\textsubscript{both} & E\\textsubscript{both} $-$ E & C\\textsubscript{both} $-$ C & S $-$ E\\textsubscript{both} & '
@@ -288,7 +288,7 @@ if os.path.exists(e1_path):
     stable('tabS_noise_diag.tex',
            'Experiment 1, boundary diagnostics of the segmenters on the corrupted audio, against the expert-reviewed annotation over the whole recording: median '
            'cycle-start F1 (cycles outside the annotated stretches count as unmatched, so the clean values lie below the inside-annotation F1 of the main text and '
-           'the rows are read as changes from the clean row); share of recordings (per cent) whose median S2 onset lies more than 60\\,ms from the annotation, the '
+           'the rows are read as changes from the clean row); share of recordings (per cent) whose median S2 start lies more than 60\\,ms from the annotation, the '
            'failure criterion of the error budget; share of recordings (per cent) that fell back to equal-time windows.',
            'tab:Snoisediag', '@{}ll' + 'r' * 9 + '@{}',
            'Interference & dB & \\multicolumn{3}{c}{Cycle-start F1} & \\multicolumn{3}{c}{S2 $>$ 60\\,ms (\\%)} & \\multicolumn{3}{c}{Fallback (\\%)} \\\\\n'
@@ -301,9 +301,9 @@ if os.path.exists(e1_path):
         rows.append(' & '.join([SHORT1.get(kind, kind), lvl] + [pm(oc['seg'][a]['gain_over_E']) for a in ('S', 'T', 'W')] +
                                ['%.2f' % oc['seg'][a]['retention']['point'] for a in ('T', 'W')] + [pm(oc['extractor']['E_both_minus_E'])]) + ' \\\\')
     text = ('%% generated by 00_admin/make_supp_tables.py\n\\begin{table}[tbp]\n\\centering\n\\caption{\\rev{Added in-band interference at test time '
-            '(610 murmur-present recordings; composite macro-F1 points, 95\\%% participant-bootstrap intervals). Gain over equal-time windows (E) when Springer (S), '
-            'the timing network (T), and the waveform network (W) segment the corrupted audio and features come from the clean audio; share of the clean '
-            'gain kept by T and W; and the change in E when features come from the corrupted audio (E\\textsubscript{both} $-$ E). Recorded sounds: crying, '
+            '(610 murmur-present recordings; composite macro-F1 points, 95\\%% participant-bootstrap intervals). Springer (S), '
+            'the timing network (T), and the waveform network (W) segmented the corrupted audio; features came from the clean audio. Kept: share of the clean '
+            'gain over equal-time windows (E). E\\textsubscript{both} $-$ E: change in E when features also came from the corrupted audio. Recorded sounds: crying, '
             'breathing, and coughing. Clean gains: S %.1f, T %.1f, W %.1f.}}\n'
             '\\label{tab:noise}\n\\scriptsize\n\\setlength{\\tabcolsep}{3pt}\n\\begin{tabular}{@{}llllllll@{}}\n\\toprule\n'
             'Interference & dB & S $-$ E & T $-$ E & W $-$ E & Kept, T & Kept, W & E\\textsubscript{both} $-$ E \\\\\n\\midrule\n%s\n\\bottomrule\n\\end{tabular}\n\\end{table}\n'

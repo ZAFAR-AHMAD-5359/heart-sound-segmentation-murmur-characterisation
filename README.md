@@ -10,45 +10,46 @@ Read section 1 for the study, section 3 for the experiment map, and section 5 fo
 
 **Question.** The classifiers read 258 of their 464 features inside four cardiac phases: S1, systole, S2 and diastole.
 How much of the accuracy of murmur grading, timing and shape depends on where the phase boundaries fall? Can an
-automatic method trained without any CirCor annotation come near the expert-reviewed boundaries?
+automatic method trained without any annotation of the CirCor DigiScope dataset come near the expert-reviewed boundaries?
 
-**Design.** Every arm cuts the same 3,000 CirCor recordings (816 participants) into cycles of four phases. Every arm
-then feeds the same 464 features, the same classifiers and the same participant-grouped ten-fold split. Only the
+**Design.** Every method cuts the same 3,000 recordings (816 participants) of the CirCor DigiScope dataset into cycles of four
+phases. Every method then feeds the same 464 features, the same classifiers and the same participant-grouped ten-fold split. Only the
 source of the boundaries differs.
 
-| Arm | Boundaries | Role |
+| Method | Boundaries | Role |
 |---|---|---|
 | E | Equal-time windows at 75 beats per minute, four equal quarters | Baseline |
 | E2 | Equal pseudo-cycles, as many as the annotation has cycles | Descriptive |
-| C | Expert-reviewed CirCor segmentation | Reference only |
-| D | Annotated S1 onsets, phases at fixed fractions of each cycle | Fixed against adaptive phases |
+| C | Expert-reviewed segmentation of the CirCor DigiScope dataset | Reference only |
+| D | Annotated cycle starts, phases at fixed fractions of each cycle | Fixed against adaptive phases |
 | A, B | R-peaks of the synthetic ECG of the companion study; fixed fractions (A) or acoustic refinement (B) | Earlier generator |
 | S, S_pub | Springer segmenter; heart-rate search 40 to 220 (S) or the published 30 to 120 beats per minute (S_pub) | Automatic comparators |
-| T | Timing network: S1, S2 and R-peak heads, trained with the ECG as teacher on six adult paired PCG-ECG datasets | Primary new arm |
+| T | Timing network: S1, S2 and R-peak heads, trained with the ECG as teacher on six adult paired PCG-ECG datasets | Primary new method |
 | W | The same network, trained only to rebuild the ECG | Reconstruction test |
 | T_ac | As T, trained on S1 and S2 labels from the PCG alone | Control for the ECG teacher |
 | CNN | No boundaries: a PCG-only convolutional network | Detection reference |
 
-Each automatic arm also has a matched-coverage version (suffix `_annot`). It keeps only the cycles that start inside
-the annotated stretches, so it is scored on the same audio as C.
+Each automatic method also has a matched-coverage version (suffix `_annot`). It keeps only the cycles that start inside
+the annotated stretches, so it is scored on the same audio as C. The code and its output files call each boundary
+method an "arm" (for example `arm_failures.json`).
 
 **Endpoint.** The composite macro-F1: the mean macro-F1 over grading, timing and shape, from a five-seed ensemble of
-multilayer perceptrons. The intervals come from 2,000 bootstrap draws of participants, one set shared by every arm.
+multilayer perceptrons. The intervals come from 2,000 bootstrap draws of participants, one set shared by every method.
 
 ## 2. Rules the code enforces
 
-- **Pre-registration first.** `2_preregistration/extension_study/PREREG_EXT.md` fixed the arms, endpoint, hypotheses
-  and folds on 16 October 2026, 16:07 Pakistan time, before any arm was scored on CirCor. Its SHA-256 sits beside it.
+- **Pre-registration first.** `2_preregistration/extension_study/PREREG_EXT.md` fixed the methods, endpoint, hypotheses
+  and folds on 16 October 2026, 16:07 Pakistan time, before any method was scored on the CirCor DigiScope dataset. Its SHA-256 sits beside it.
   The dated change log `CHANGES_AFTER_FREEZE.md` records every later decision with the results known at the time.
-- **No CirCor data in training.** T, W and T_ac learnt and were selected on paired adult data alone. The test
-  `1_code/extension_study/tests/test_firewall.py` fails if a training or selection module refers to a CirCor path.
-- **One scoring per arm.** Each scoring went into the append-only ledger `2_preregistration/ledger.csv`, with a time
+- **No data of the CirCor DigiScope dataset in training.** T, W and T_ac learnt and were selected on paired adult data alone. The test
+  `1_code/extension_study/tests/test_firewall.py` fails if a training or selection module refers to a path of the CirCor DigiScope dataset.
+- **One scoring per method.** Each scoring went into the append-only ledger `2_preregistration/ledger.csv`, with a time
   stamp and the SHA-256 of the predictions.
 - **Builders, not hand edits.** A Python builder writes each Colab notebook; no notebook was edited by hand. A notebook
   carries the code it runs and checks the hashes of its inputs. Its `run_manifest.json` records the package versions,
   the settings and the hashes.
-- **Reproduction controls.** Each later run repeats an arm of an earlier run, and a gate checks that the repeated
-  predictions match before the analysis. For example, arm E of Run 2 must equal arm E of Run 1.
+- **Reproduction controls.** Each later run repeats a method of an earlier run, and a gate checks that the repeated
+  predictions match before the analysis. For example, method E of Run 2 must equal method E of Run 1.
 - **No typed numbers.** Scripts write every results table of the paper from the result files (section 5).
 
 ## 3. Experiment map
@@ -60,12 +61,12 @@ The steps are listed in the order they ran. Dates are in 2026, Pakistan time. Co
 | # | Date | Step and question | Code and notebook | Outputs | Analysis and its output | Paper |
 |---|---|---|---|---|---|---|
 | 0 | 15 Oct | **Folds.** No participant may sit in both training and test data; 70 children enrolled twice under two IDs. | `extstudy/splits.py` | `folds_child/` | | Methods |
-| 1 | 16 Oct | **Run 1.** H1: do Springer boundaries (S) beat equal-time windows (E)? The run also scores C, D, E2, A, B, S_pub and the matched-coverage arms. | `notebooks/build_run1.py` writes `Extension_Run1.ipynb` | `run1_20261016_1516/` | `extstudy/stats.py`: `run1_stats/` | Tables 3, 4 |
+| 1 | 16 Oct | **Run 1.** H1: do Springer boundaries (S) beat equal-time windows (E)? The run also scores C, D, E2, A, B, S_pub and the matched-coverage methods. | `notebooks/build_run1.py` writes `Extension_Run1.ipynb` | `run1_20261016_1516/` | `extstudy/stats.py`: `run1_stats/` | Tables 3, 4 |
 | 2 | 17 Oct | **CNN.** A detection reference with no phase boundaries, on the same folds. | `build_cnn_run1.py` writes `Extension_Run1_CNN.ipynb` | `cnn_baseline/` | `run1_stats/cnn_stats.json` | Results |
 | 3 | 15 to 18 Oct | **Labels, then training of T and W.** Teacher R-peaks on the paired ECG; S1 and S2 marks on the PCG envelope; a label gate against the PhysioNet/CinC 2016 reference annotations; the training pack; three seeds per network, selected on paired validation data and frozen. W asks whether rebuilding the ECG waveform adds anything over marking the heart sounds. | `extstudy/qrs.py`, `relabel.py`, `labels.py`, `refcheck.py`, `corpus.py`; `build_train.py` writes `Extension_Train_TW.ipynb` | `tw_training_and_freeze_20261018_0908/`: weights, `freeze.json`, `paired_test.json` | `check_export_paired.py`, `check_w_val.py` | Supplement S-TW |
 | 4 | 18 Oct | **Run 2.** H2 to H4: does T beat E, is T non-inferior to S, and does T beat S? W is an estimate. | `build_run2.py` writes `Extension_Run2.ipynb` | `run2_20261018_1358/` | `merge_run2.py` with `extstudy/stats.py`: `run2_scoring/` | Tables 3, 4; Figure 3 |
 | 5 | 18 to 19 Oct | **Experiment 0, the beat-error budget.** How much beat-level error (missed or added cycle starts, jitter) can expert boundaries carry before the gain over E is lost? | `extstudy/corrupt.py`; `build_exp0.py` writes `Experiment0_BeatErrorBudget.ipynb` | `exp0_20261018_1659/` | `exp0_analysis.py`: `exp0_analysis/` | Figure 4; S-Budget |
-| 6 | 19 Oct | **S2 follow-up** (exploratory, not pre-registered). Why do the automatic arms keep less of the gain than the curve of Experiment 0 predicts? | `s2_phase_analysis.py`, `s2_variability_analysis.py` | `s2_followup/` | | S-Budget |
+| 6 | 19 Oct | **S2 follow-up** (exploratory, not pre-registered). Why do the automatic methods keep less of the gain than the curve of Experiment 0 predicts? | `s2_phase_analysis.py`, `s2_variability_analysis.py` | `s2_followup/` | | S-Budget |
 | 7 | 20 to 21 Oct | **Experiment 0b.** For the same amount of error, does failure in some recordings cost more than error spread over all of them? | `build_exp0b.py` writes `Experiment0b_FailureConcentration.ipynb` | `exp0b_prep/`, `exp0b_20261021_0913/` | `exp0b_analysis.py`, `exp0b_where_lost.py`: `exp0b_analysis/` | S-Budget |
 | 8 | 21 to 22 Oct | **Experiment 0c.** Does the same failure cost more on the recordings where Springer fails than on as many recordings drawn at random? | `exp0c_prep.py`, `extstudy/placement.py`; `build_exp0c.py` writes `Experiment0c_FailurePlacement.ipynb` | `exp0c_prep/`, `exp0c_20261022_0916/` | `exp0c_analysis.py`: `exp0c_analysis/` | S-Budget |
 | 9 | 22 Oct | **The remaining Run 2 estimates.** Heart-rate bands, infants, the sensitivity analysis without fallback recordings, and T against the CNN. | `run2_estimation.py` | `run2_estimation/` | | Table 5; S-Subgroups |
@@ -73,7 +74,7 @@ The steps are listed in the order they ran. Dates are in 2026, Pakistan time. Co
 | 11 | 23 and 29 Oct | **Revision checks.** Contrasts with S_pub; contrasts with C at matched coverage; results without the pregnant participants; end-to-end characterisation with detection misses counted as failures. Then, from the independent code review: bootstrap-seed sensitivity, detection misses by class, fallback counts. | `revision_checks.py`, `revision_checks2.py` | `revision_checks/`, `revision_checks2/` | | Table 4; Supplement |
 | 12 | 29 Oct | **Experiment 1, in-band interference.** How much of the gain survives noise confined to 20 to 500 Hz and not locked to the cardiac cycle? Gaussian noise, bursts, and ESC-50 crying, breathing and coughing at 10 and 0 dB. | `extstudy/noise.py`; `build_exp1.py` writes `Experiment1_InBandNoise.ipynb` | `exp1_20261029_1331/` | `exp1_analysis.py`: `exp1_analysis/` | Table 6; S-Noise |
 | 13 | 29 Oct | **Experiment 2, training of T_ac.** Is the ECG teacher needed? The design of T, trained on S1 and S2 labels from the PCG alone. | `extstudy/labels_acoustic.py`; `build_train_ac.py` writes `Extension_Train_AC.ipynb` | `ac_training_and_freeze_20261029_1824/` | | S-Control |
-| 14 | 29 to 30 Oct | **Run 3.** T_ac scored once on CirCor, as T was. | `build_run3.py` writes `Extension_Run3.ipynb` | `run3_20261029_1955/` | `exp2_analysis.py`, `write_exp2_results.py`: `exp2_analysis/` | Tables 3, 4; S-Control |
+| 14 | 29 to 30 Oct | **Run 3.** T_ac scored once on the CirCor DigiScope dataset, as T was. | `build_run3.py` writes `Extension_Run3.ipynb` | `run3_20261029_1955/` | `exp2_analysis.py`, `write_exp2_results.py`: `exp2_analysis/` | Tables 3, 4; S-Control |
 
 The plans of Experiments 0 to 2 are in `2_preregistration/error_budget_experiments/`. Each plan was hashed before its
 boundary sets, corrupted audio or labels existed. Experiments 0b, 0c, 1 and 2 were designed after the main results
@@ -92,7 +93,7 @@ FILE_INDEX.csv                   every file with its size and SHA-256, and wheth
                                  corruption and interference generators, pre-registered statistics (stats.py)
     notebooks/                   build_*.py (one builder per Colab notebook), the notebooks as built, and every
                                  local analysis script of the map above
-    tests/                       pytest suite, one file per module (CirCor firewall test included)
+    tests/                       pytest suite, one file per module (firewall test for the CirCor DigiScope dataset included)
     archive/                     the label code of versions 1 and 2, which failed their checks (kept as the record)
     README.md, CODE_DESIGN.md    how to run; module plan, data flow and the reasons for each rule
   pcgecg/                        readers for the six paired PCG-ECG datasets, the data audit, the PCG envelope
@@ -107,7 +108,7 @@ FILE_INDEX.csv                   every file with its size and SHA-256, and wheth
                                  the run sheet of Experiments 1 and 2, the S2 follow-up note
   ledger.csv                     the append-only run ledger
 3_results/                       one folder per run or analysis, named by step and time stamp (section 3)
-weights/generator.pt             the synthetic-ECG generator of arms A and B (repository only)
+weights/generator.pt             the synthetic-ECG generator of methods A and B (repository only)
 first_submission_code/           the code released with the first submission (repository only; section 8)
 ```
 
@@ -121,7 +122,7 @@ first_submission_code/           the code released with the first submission (re
 | Supplement S-Control | `exp2_analysis/`, `ac_training_and_freeze_20261029_1824/`, `tw_training_and_freeze_20261018_0908/` | `make_supp_control.py` |
 | Figure 3 | `run2_scoring/stats_results.json` | `fig3_results.py` |
 | Figure 4 | `exp0_analysis/`, `exp0b_analysis/`, `run2_scoring/stats_results.json`, `s2_followup/` | `fig_beat_error_budget.py` |
-| Figure 5 (spectral overlap) | computed from curated CirCor recordings, not stored here | `fig2_psd_compute.py`, `fig2_psd.py` |
+| Figure 5 (spectral overlap) | computed from curated recordings of the CirCor DigiScope dataset, not stored here | `fig2_psd_compute.py`, `fig2_psd.py` |
 
 The scripts were written for the revision package, where this folder's `3_results/` is named `06_results/`. To rerun
 one, point the results path at the top of the script (`RES`, `SRC` or `RUNS`) to `3_results/`.
@@ -143,7 +144,7 @@ and PyWavelets 1.8.0.
 **Paths.** `1_code/extension_study/extstudy/config.py` holds every path, for a local Windows layout (`LOCAL`) and for
 Google Drive on Colab (`DRIVE`). Set `PHD_LOCAL` to the folder of the raw and derived data, `LOCAL['pcgecg_code']` to
 `1_code`, `LOCAL['r1_builder']` and the builder paths at the top of `notebooks/build_run1.py` and `build_cnn_run1.py`
-to `1_code/r1_base_notebooks/`, `LOCAL['generator']` to `weights/generator.pt`, and `_CIRCOR_LOCAL` to the CirCor
+to `1_code/r1_base_notebooks/`, `LOCAL['generator']` to `weights/generator.pt`, and `_CIRCOR_LOCAL` to the CirCor DigiScope
 `training_data` folder.
 
 **Order.**
@@ -197,7 +198,7 @@ system.
   with the authors. So does the first-revision campaign run that the integrity gate of Run 1 compared against (about
   7 GB).
 - **Run 20261016_1232.** A first attempt at Run 1 on an L4 GPU failed its integrity gate: the R1 feature matrices of
-  arms A and B did not reproduce. Its outputs were sealed and not scored; the ledger lists their hashes. Run
+  methods A and B did not reproduce. Its outputs were sealed and not scored; the ledger lists their hashes. Run
   20261016_1516 is the confirmatory Run 1.
 - **Smoke tests**, interface tests and planning notes of a follow-up study.
 - **Large binary files, in the repository only.** The frozen weights (`*.pt`: three seeds each of T, W and T_ac, and
@@ -206,7 +207,7 @@ system.
   with their hashes.
 - **The first-submission code**, in the repository only. `first_submission_code/` holds the code released with the
   first submission (commit 751a376, 22 August 2026), unchanged. The study code of the revision is `1_code/`. The
-  generator checkpoint in `weights/` is the one that arms A and B ran with: Run 1 recorded its SHA-256 (284a5b43...).
+  generator checkpoint in `weights/` is the one that methods A and B ran with: Run 1 recorded its SHA-256 (284a5b43...).
 
 ## 9. Licences
 

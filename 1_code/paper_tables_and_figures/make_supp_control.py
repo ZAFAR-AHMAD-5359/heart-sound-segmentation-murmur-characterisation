@@ -54,7 +54,7 @@ for mdl in ('T_seed11', 'T_seed22', 'T_seed33'):
 stable('tabS_control_test.tex',
        'Beat identification on the held-out paired test records by the control network T\\textsubscript{ac} (trained on acoustic labels) beside the timing '
        'network T: Cohen\'s kappa against the confirmed ECG beats, per dataset and seed, with the validation score that selected each checkpoint and its epoch. '
-       'Descriptive; the plan required no gate for the control arm.',
+       'Descriptive; the plan required no gate for the control network.',
        'tab:Scontroltest', '@{}l' + 'r' * 7 + '@{}', 'Model & ' + ' & '.join(DSN[d] for d in DS) + ' & Validation & Epoch', rows)
 
 # ---- table: composite, per task, detection, random forest, and the contrasts
@@ -79,10 +79,10 @@ ra, rt = e['recovery_T_ac'], e['recovery_T']
 rows.append('\\multicolumn{7}{@{}l}{Recovery at matched coverage, $(X_{\\text{annot}} - E_{\\text{annot}})/(C - E_{\\text{annot}})$: T\\textsubscript{ac} %.2f %s; T %.2f %s} \\\\' % (
     ra['point'], ci(ra['ci95'], '%.2f') if ra['ci95'] else 'n.e.', rt['point'], ci(rt['ci95'], '%.2f') if rt['ci95'] else 'n.e.'))
 stable('tabS_control.tex',
-       'Experiment 2: the acoustic-label control network T\\textsubscript{ac} beside the arms of the main comparison. Composite macro-F1 (multilayer perceptron) with '
+       'Experiment 2: the acoustic-label control network T\\textsubscript{ac} beside the methods of the main comparison. Composite macro-F1 (multilayer perceptron) with '
        '95\\% participant-bootstrap intervals (2{,}000 shared draws over the merged predictions of Runs 1, 2, and 3), per-task macro-F1, detection macro-F1, and the '
        'random forest composite; then the pre-registered contrast and the estimation contrasts. Values for C are reference values.',
-       'tab:Scontrol', '@{}llrrrrr@{}', 'Arm & Composite [95\\% CI] & Grading & Timing & Shape & Detection & RF composite', rows)
+       'tab:Scontrol', '@{}llrrrrr@{}', 'Method & Composite [95\\% CI] & Grading & Timing & Shape & Detection & RF composite', rows)
 
 # ---- section text
 s1 = '%.2f' % (100 * g['acoustic']['s1_ok'][0]) if g else 'n/a'
@@ -115,38 +115,37 @@ text = r'''%% Section S-Control: Experiment 2, the acoustic-label control networ
 
 \subsection{Question and design}
 
-The main comparison does not by itself isolate the electrocardiogram as teacher: no arm trained the same network without
+The main comparison does not by itself isolate the electrocardiogram as teacher: no method trained the same network without
 electrocardiogram-derived labels, so the gain of T over Springer could come from the teacher or from the network, its
-corpus, and its augmentation. This experiment adds that arm. It was pre-registered on 29 October 2026 after the main
+corpus, and its augmentation. This experiment adds that network. It was pre-registered on 29 October 2026 after the main
 results, the error-budget experiments, the code review, and Experiment 1, and its plan was hashed (SHA-256 beginning
 \texttt{f0b9fe2b}) before any acoustic label, network, or score existed; the training notebook, the scoring notebook,
 and the analysis script each refuse to run under a different plan hash.
 
 \textbf{Labels.} The same paired records and usable spans as the labels of T, so both networks learn from the same audio.
 Beat identity came from the Springer segmenter run on the phonocardiogram alone (published parameters, the primary
-heart-rate setting of arm S), in windows of at most 60\,s; S1 and S2 were the envelope maxima inside Springer's S1 and S2
-states, each widened by 30\,ms, under the validity rules of the labels of T with the Springer S1-state onset as the beat
-reference in place of the R-peak. No electrocardiogram sample, R-peak, or electrocardiogram-derived mask entered any
+heart-rate setting of method S), in windows of at most 60\,s; S1 and S2 were the envelope maxima inside Springer's S1 and S2
+states, each widened by 30\,ms, under the validity rules of the labels of T with the start of the Springer S1 state as the beat reference in place of the R-peak. No electrocardiogram sample, R-peak, or electrocardiogram-derived mask entered any
 mark or rule. The lag laws for the interval warping of training were fitted on the valid beats of the training
 subjects by the same median regression. This gave %s valid beats of %s candidates (T: 69{,}176 valid beats).
 
 \textbf{Label check (reported, not required).} Against the hand-corrected PhysioNet/CinC 2016 training-a annotations,
 scored exactly as the labels of T were (mark inside the annotated sound widened by 20\,ms; record-clustered bootstrap),
 the acoustic labels passed at %s\%% for S1 (%s to %s) and %s\%% for S2 (%s to %s), against 99.98\%% and 99.88\%% for the
-electrocardiogram-derived labels. The plan fixed that the arm trains whatever this result, because a difference in label
+electrocardiogram-derived labels. The plan fixed that the network is trained whatever the result of this check, because a difference in label
 quality between the two teachers is part of what the experiment measures.
 
 \textbf{Network, training, and freezing.} The T architecture with two heads (S1, S2; 872{,}322 parameters) and no R-peak
 head, trained on the same pack, crops, batch composition, augmentation, schedule, and seeds (11, 22, 33) as T, with the
 same selection rule (beat-identity F1 of S1 from the S1-minus-S2 trace through the shared decoder, on native and
-rate-warped validation sets). Nothing was tuned for this arm. The three checkpoints were hashed and frozen on 30 October
-2026 (best validation score %s, against %s for T), before any CirCor scoring. Table~\ref{tab:Scontroltest} gives their beat
+rate-warped validation sets). Nothing was tuned for this network. The three checkpoints were hashed and frozen on 30 October
+2026 (best validation score %s, against %s for T), before any scoring on the CirCor DigiScope dataset. Table~\ref{tab:Scontroltest} gives their beat
 identification on the held-out paired test records beside T.
 
-\textbf{Scoring on CirCor (Run 3).} As Run 2: the three seeds averaged, cycles from the S1 and S2 heads through the
+\textbf{Scoring on the CirCor DigiScope dataset (Run 3).} As Run 2: the three seeds averaged, cycles from the S1 and S2 heads through the
 construction of T unchanged, fallback to equal-time windows below two cycles (%s), the matched-coverage version
 restricted to the annotated stretches, the 3{,}000 recordings, the embedded participant-grouped folds, the 464 features,
-the five-seed multilayer perceptron, and the random forest of Run 1. Arm E was rebuilt as the reproduction control and
+the five-seed multilayer perceptron, and the random forest of Run 1. Method E was rebuilt as the reproduction control and
 gave %s. One scoring run, logged in the ledger; the analysis script ran once on the merged predictions of Runs 1, 2,
 and 3 with the shared participant bootstrap.
 
@@ -164,8 +163,7 @@ The acoustic teacher is itself the Springer segmenter, whose own model was train
 its development, so the control removes the electrocardiogram from this study's training, not from the lineage of the
 acoustic method. Record selection and the usable spans of long records are shared with T, so the control does not test
 a pipeline free of the electrocardiogram from the raw data onward. The contrast carries an interval of about $\pm 3$ points, so
-smaller differences between the two teachers are not shown. Nothing was trained or selected on CirCor, and no CirCor
-label or annotation entered the acoustic labels or the network.
+smaller differences between the two teachers are not shown. Nothing was trained or selected on the CirCor DigiScope dataset, and no label or annotation from it entered the acoustic labels or the network.
 
 \input{tables/tabS_control}
 \input{tables/tabS_control_test}
