@@ -1,10 +1,91 @@
 # Heart-sound segmentation and phase-based features for paediatric murmur characterisation: code, notebooks and outputs
 
 This is the material of the study in manuscript EHJDH-D-26-00501, revision R1 (*European Heart Journal - Digital
-Health*). It holds the analysis code, the notebooks as they ran, their outputs, the frozen network weights, and the
-pre-registration records named in the Data Availability statement.
+Health*). It holds the full analysis code, the notebooks as they ran, their outputs, the frozen network weights, and the
+pre-registration records named in the Data Availability statement. The repository is public for peer review and
+reproduction.
 
-Read section 1 for the study, section 3 for the experiment map, and section 5 for the source of each reported number.
+**Where to start.** The three diagrams below give the study, the repository and the order of the experiments at a
+glance. Then read section 1 for the study, section 3 for the experiment map, section 5 for the source of each reported
+number, and section 6 to rerun.
+
+```
+git clone https://github.com/ZAFAR-AHMAD-5359/heart-sound-segmentation-murmur-characterisation.git
+```
+
+The clone is about 240 MB, most of it the frozen weights and the out-of-fold predictions.
+
+## Visual map
+
+### The study
+
+Networks learn on adult recordings with a simultaneous ECG. They are frozen, then tested once on the paediatric
+recordings of the CirCor DigiScope dataset, beside the other boundary methods. Only the source of the phase boundaries
+differs between methods.
+
+```mermaid
+flowchart TB
+    subgraph TRAIN["Training on adults"]
+        P1["Six paired PCG-ECG datasets<br/>2,113 adult recordings<br/>no CirCor DigiScope data"] --> P2["ECG as teacher<br/>R-peaks, S1 and S2 labels"]
+        P2 --> P3["Timing network T<br/>waveform network W<br/>control network T_ac"]
+    end
+    subgraph TEST["Test on children"]
+        T0["CirCor DigiScope dataset<br/>3,000 recordings<br/>816 participants"] --> B
+        B["Phase boundaries from each method<br/>E, E2, C, D, A, B, S, S_pub, T, W, T_ac"] --> F["The same 464 features<br/>258 read inside S1, systole, S2, diastole"]
+        F --> M["The same classifiers<br/>five-seed MLP ensemble<br/>participant-grouped ten-fold split"]
+        M --> O["Composite macro-F1<br/>grade, timing, shape<br/>and murmur detection"]
+    end
+    P3 -->|"frozen weights"| B
+    PR["Pre-registration<br/>frozen 16 October 2026"] -.->|"fixes methods, endpoint, folds"| TEST
+```
+
+### The repository
+
+Each Colab notebook is written by a Python builder, runs once, and writes a run folder. Analysis scripts read the run
+folders, and table scripts write every number of the paper from them. The ledger keeps the hash of every output.
+
+```mermaid
+flowchart TB
+    PRE["2_preregistration/<br/>plans with SHA-256, change log"] -->|"fixes the rules"| BLD
+    subgraph CODE["1_code/"]
+        direction LR
+        PCG["pcgecg/<br/>readers for the paired datasets"] --> PKG["extension_study/extstudy/<br/>Python package of the study"]
+        PKG --> BLD["extension_study/notebooks/build_*.py<br/>one builder per notebook"]
+        TST["extension_study/tests/<br/>pytest suite with CirCor firewall"] -.->|"checks"| PKG
+    end
+    BLD -->|"writes"| NB["Colab notebooks<br/>run on an A100 GPU"]
+    WTS["weights/ and *.pt files<br/>frozen networks"] --> NB
+    NB -->|"writes"| RES["3_results/ run folders<br/>oof_predictions.npz, results.json<br/>run_manifest.json, notebook as run"]
+    RES --> ANA["analysis scripts<br/>pre-registered statistics"]
+    ANA --> RES
+    RES --> TAB["1_code/paper_tables_and_figures/<br/>table and figure scripts"]
+    TAB --> PAPER["Tables, Figures 3 and 4,<br/>Supplement tables"]
+    RES -->|"hash of every output"| LED["2_preregistration/ledger.csv"]
+```
+
+### The order of the experiments
+
+Dates are in 2026. The numbers match the rows of the experiment map in section 3.
+
+```mermaid
+flowchart TB
+    subgraph G1["Main comparison"]
+        direction LR
+        S0["Step 0: folds<br/>15 Oct"] --> S1["Step 1: Run 1<br/>E, C, D, A, B, S<br/>16 Oct"]
+        S1 --> S2["Step 2: CNN reference<br/>17 Oct"]
+        S2 --> S3["Step 3: labels,<br/>training of T and W<br/>15 to 18 Oct"]
+        S3 --> S4["Step 4: Run 2<br/>T and W scored<br/>18 Oct"]
+    end
+    subgraph G2["Error budget and checks"]
+        direction LR
+        S5["Steps 5 to 8:<br/>Experiments 0, 0b, 0c<br/>18 to 22 Oct"] --> S9["Steps 9 to 11: estimates,<br/>secondary metrics,<br/>revision checks<br/>22 to 29 Oct"]
+    end
+    subgraph G3["Follow-up experiments"]
+        direction LR
+        S12["Step 12: Experiment 1<br/>in-band noise<br/>29 Oct"] --> S13["Steps 13 and 14:<br/>Experiment 2, T_ac<br/>and Run 3<br/>29 to 30 Oct"]
+    end
+    G1 --> G2 --> G3
+```
 
 ## 1. The study in brief
 
